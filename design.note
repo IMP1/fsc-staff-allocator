@@ -1,0 +1,51 @@
+# FSC Staff Allocator
+
+
+(Is there a genre of problem this belongs to? Is there a solved abstract version of this problem?)
+
+
+## Overview
+
+Staff have various attributes
+Staff have preferences for which camp they're on
+Camps have various criteria for the staff composition
+
+Some staff have other staff they need to camp with
+
+  - [ ] What's the input to this system?
+  - [ ] What's the desired output from this system?
+
+
+## Manual Process
+
+Put people into piles
+    Group chiefs with inclusion training
+    Group chiefs
+    Staff with inclusion training
+    Experienced Staff
+    New Staff
+    Gender balance
+    Age balance?
+
+
+## Pseudocode
+
+
+
+
+## Thoughts
+
+Worst case I can randomly assign people and see if the camps' criteria and staff's preferences are met
+Could do chess-bot-style thing, where there's some alpha-beta pruning and an evaluation function of the current allocations
+
+Could have a Test-Driven-Development approach where we look at some test for when it should succeed, and some tests for when it should fail.
+This would get us to think about what it would look like for this system to work, including when it should fail and how.
+
+## Questions
+
+  - [ ] What are the priorities of criteria?
+  - [ ] What are the relevant staff attributes?
+  - [ ] How many staff are there?
+  - [ ] How is the staff data stored currently?
+  - [ ] How interactive should this solution be?
+  - [ ] What is the process for evaluating an allocation?
