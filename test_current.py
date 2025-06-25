@@ -46,7 +46,7 @@ def main() -> None:
                 c.staff.append(s)
 
     analyse_allocations(camps, staff)
-    save_allocation_data(camps, "2025 Actual Allocations.txt")
+    save_allocation_data(camps, "output/2025 Actual Allocations.txt")
 
 
 if __name__ == '__main__':
