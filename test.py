@@ -17,8 +17,8 @@ def main(args):
         allocator.log_to_stdout = False
         allocation_data.log_to_stdout = False
 
-    applications = allocation_data.load_staff_data("data/All Applications for All Staff for Summer - First Fortnight.csv")
-    camps = allocation_data.load_camp_data("data/Camp_Requirements First Fortnight.csv")
+    applications = allocation_data.load_staff_data(args.applications)
+    camps = allocation_data.load_camp_data(args.camps)
     if not args.quiet:
         print(f"Loaded data for {len(applications)} applications.")
         print(f"Loaded data for {len(camps)} camps.")
@@ -50,6 +50,9 @@ if __name__ == '__main__':
                     prog='Staff Allocator',
                     description='Allocates FSC staff to camps based on camp needs and staff preferences',
                     epilog='version 0.0.1')
+    # TODO: Pass in application and camp csv filepaths
+    parser.add_argument('camps')
+    parser.add_argument('applications')
     parser.add_argument('--log-file')
     parser.add_argument('--result-file')
     parser.add_argument('--dry-run', action='store_true')
