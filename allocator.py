@@ -111,20 +111,18 @@ def __allocate_from_pool(pool_name: str, camps: list, application_list: list, cu
             reason = ""
             staff = None
 
-            # TODO: Handle staff with 'any 1st fortnight' as their preference
-            # TODO: Handle staff with 'any either fortnight' as their preference
-            # TODO: Question: Will this be run for both/all camps at once? 
+            # TODO: Question: Will this be run for both fortnights/all camps at once? 
             #       In which case, then camps will need to say whether they're first/second fortnight
             #       Or else, then somehow will need to know if a preference for first/second is relevant to this application for this camp
 
             if not staff:
-                staff = next((s for s in current_pool if s.preferences[0] == camp.id or s.preferences[0] < 0), None) # First choice preferences
+                staff = next((s for s in current_pool if (s.preferences[0] == camp.id) or (s.preferences[0] < 0)), None) # First choice preferences
                 reason = "First choice"
             if not staff:
-                staff = next((s for s in current_pool if s.preferences[1] == camp.id or s.preferences[1] < 0), None) # Second choice preferences
+                staff = next((s for s in current_pool if (s.preferences[1] == camp.id) or (s.preferences[1] < 0)), None) # Second choice preferences
                 reason = "2nd choice"
             if not staff:
-                staff = next((s for s in current_pool if s.preferences[2] == camp.id or s.preferences[2] < 0), None) # Third choice preferences
+                staff = next((s for s in current_pool if (s.preferences[2] == camp.id) or (s.preferences[2] < 0)), None) # Third choice preferences
                 reason = "3rd choice"
             if not staff:
                 staff = current_pool[0]
@@ -200,8 +198,7 @@ def analyse_allocations(camps: list, applications: list) -> None:
         camp_applications = str(len(applications_for_camp)).rjust(3, " ") + " applications"
         gender_balance = int(100 * len([s for s in c.staff if s.is_dominant_gender]) / len(c.staff))
         gender_balance = f"{gender_balance}% Women"
-        print(f"  - Camp {c.id} {name} : {camp_applications} : {gender_balance}")
-    print("Gender Balance:")
+        print(f"  - Camp {c.id} {name} : {camp_applications}   {gender_balance}")
     print("Campers Not Placed:")
     not_placed = [s for s in applications if not any([s in c.staff for c in camps])]
     for s in not_placed:
