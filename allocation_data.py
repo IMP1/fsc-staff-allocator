@@ -1,6 +1,7 @@
 import sys
 import csv
-import allocator
+from allocator import StaffMember, Camp
+from allocator import NO_PREFERENCE, ANY_FIRST_FORTNIGHT, ANY_SECOND_FORTNIGHT, ANY_EITHER_FORTNIGHT
 import random
 import collections
 from enum import Enum
@@ -24,11 +25,6 @@ CAMP_MIN_INCLUSION_STAFF = 4
 CAMP_MIN_EXPERIENCED_STAFF = 5
 CAMP_MIN_STAFF = 6
 CAMP_MAX_STAFF = 7
-# Appliocation Preference Special Values
-NO_PREFERENCE = 0
-ANY_FIRST_FORTNIGHT = -1
-ANY_SECOND_FORTNIGHT = -2
-ANY_EITHER_FORTNIGHT = -3
 
 
 log_filepath = "log.txt"
@@ -72,7 +68,7 @@ def load_staff_data(filepath: str) -> list:
             next(csv_reader)
             for row in csv_reader:
                 staff_id = int(row[STAFF_ID])
-                s = allocator.StaffMember(staff_id)
+                s = StaffMember(staff_id)
                 s.name = row[STAFF_FIRST_NAME] + " " + row[STAFF_LAST_NAME]
                 s.is_dominant_gender = (row[STAFF_GENDER] == "Female")
                 s.preferences = []
@@ -137,7 +133,7 @@ def load_camp_data(filepath: str) -> list:
             next(csv_reader)
             for row in csv_reader:
                 camp_id = int(row[CAMP_ID])
-                c = allocator.Camp(camp_id)
+                c = Camp(camp_id)
                 c.name = row[CAMP_NAME]
                 c.min_inclusion_experience_group_chiefs = int(row[CAMP_MIN_INCLUSION_GROUP_CHIEFS])
                 c.min_inclusion_experience_staff = int(row[CAMP_MIN_INCLUSION_STAFF])

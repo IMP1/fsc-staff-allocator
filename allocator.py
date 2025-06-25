@@ -1,5 +1,11 @@
 from random import shuffle
 
+# Appliocation Preference Special Values
+NO_PREFERENCE = 0
+ANY_FIRST_FORTNIGHT = -1
+ANY_SECOND_FORTNIGHT = -2
+ANY_EITHER_FORTNIGHT = -3
+
 
 class StaffMember:
 
@@ -107,6 +113,9 @@ def __allocate_from_pool(pool_name: str, camps: list, application_list: list, cu
 
             # TODO: Handle staff with 'any 1st fortnight' as their preference
             # TODO: Handle staff with 'any either fortnight' as their preference
+            # TODO: Question: Will this be run for both/all camps at once? 
+            #       In which case, then camps will need to say whether they're first/second fortnight
+            #       Or else, then somehow will need to know if a preference for first/second is relevant to this application for this camp
 
             if not staff:
                 staff = next((s for s in current_pool if s.preferences[0] == camp.id or s.preferences[0] < 0), None) # First choice preferences
