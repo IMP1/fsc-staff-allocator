@@ -96,7 +96,7 @@ def __add_staff_to_camp(staff: StaffMember, camp: Camp, application_list: list, 
     application_list.remove(staff)
 
 
-def __allocate_from_pool(pool_name: str, camps: list, application_list: list, current_pool: list, camp_iterator, condition) -> None:
+def __allocate_from_pool(pool_name: str, camps: list, application_list: list, current_pool: list, camp_iterator, condition, consider_gender=False) -> None:
     """"""
     log(f"Allocating {pool_name}")
     shuffle(current_pool)
@@ -130,6 +130,7 @@ def __allocate_from_pool(pool_name: str, camps: list, application_list: list, cu
                 staff = current_pool[0]
                 reason = f"Any staff from {pool_name}"
             
+            # TODO: Take gender into account (sometimes)
             # TODO: Handle the case where the staff *mustn't* camp with someone who's already on this camp
 
             current_pool.remove(staff)
@@ -160,15 +161,15 @@ def allocate(camps: list, applications: list) -> list:
 
     pool = [s for s in applications if s.is_experienced]
     __allocate_from_pool("Experienced Staff", camps, applications, pool, camp_iterator, 
-        lambda c: c.get_allocated_experienced_staff() < c.min_experienced_staff)
+        lambda c: c.get_allocated_experienced_staff() < c.min_experienced_staff, True)
 
     pool = [s for s in applications]
     __allocate_from_pool("Staff", camps, applications, pool, camp_iterator, 
-        lambda c: c.get_allocated_staff() < c.min_staff)
+        lambda c: c.get_allocated_staff() < c.min_staff, True)
 
     pool = [s for s in applications]
     __allocate_from_pool("Staff", camps, applications, pool, camp_iterator, 
-        lambda c: c.get_allocated_staff() < c.max_staff)
+        lambda c: c.get_allocated_staff() < c.max_staff, True)
 
     return camps
 
@@ -196,8 +197,12 @@ def analyse_allocations(camps: list, applications: list) -> None:
     for c in camp_applications:
         applications_for_camp = [a for a in applications if c.id in a.preferences]
         name = ("(" + c.name + ")").ljust(longest_camp_name + 2, " ")
-        print(f"  - Camp {c.id} {name} : {len(applications_for_camp)} applications")
-    print(f"Campers Not Placed:")
+        camp_applications = str(len(applications_for_camp)).rjust(3, " ") + " applications"
+        gender_balance = int(100 * len([s for s in c.staff if s.is_dominant_gender]) / len(c.staff))
+        gender_balance = f"{gender_balance}% Women"
+        print(f"  - Camp {c.id} {name} : {camp_applications} : {gender_balance}")
+    print("Gender Balance:")
+    print("Campers Not Placed:")
     not_placed = [s for s in applications if not any([s in c.staff for c in camps])]
     for s in not_placed:
         print(f"  - {s.name}: ({s.preferences[0]}, {s.preferences[1]}, {s.preferences[2]})")

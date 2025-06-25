@@ -1,3 +1,5 @@
+#!/usr/bin/env python
+
 import os
 import argparse
 from datetime import datetime
@@ -50,7 +52,6 @@ if __name__ == '__main__':
                     prog='Staff Allocator',
                     description='Allocates FSC staff to camps based on camp needs and staff preferences',
                     epilog='version 0.0.1')
-    # TODO: Pass in application and camp csv filepaths
     parser.add_argument('camps')
     parser.add_argument('applications')
     parser.add_argument('--log-file')
@@ -66,3 +67,5 @@ if __name__ == '__main__':
 # TODO: Test case where staff have people they mustn't camp with
 #       Currently there don't seem to be any of this (or it's not read from the spreadsheet yet)
 
+
+# ./main.py --dry-run "data/Camp_Requirements First Fortnight.csv" "data/All Applications for All Staff for Summer - First Fortnight.csv"
